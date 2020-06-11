@@ -35,11 +35,6 @@ SwReceiver::SwReceiver(
     curl_easy_setopt(data, CURLOPT_ERRORBUFFER, errorBuffer);
     curl_easy_setopt(data, CURLOPT_WRITEFUNCTION, writeMemoryCallback);
     memset(errorBuffer, 0, sizeof(CURL_ERROR_SIZE));
-    /* DEBUG */
-    // curl_easy_setopt(data, CURLOPT_VERBOSE, 1);
-    
-    runQuery();
-
   }
   else
   {
@@ -71,7 +66,7 @@ bool SwReceiver::runQuery()
     {
       fprintf(stderr, "%s\n", curl_easy_strerror(result));
     }
-    returnValue = true;  // Force value to see what is going on
+    // returnValue = true;  // Force value to see what is going on
   }
   else
   {
@@ -102,6 +97,5 @@ size_t SwReceiver::writeMemoryCallback(
   memcpy(&(mem->memory[mem->size]), contents, realSize);
   mem->size += realSize;
   mem->memory[mem->size] = 0;  
-
   return realSize;
 }

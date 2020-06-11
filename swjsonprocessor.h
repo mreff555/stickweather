@@ -1,14 +1,22 @@
 #ifndef JSONPROCESSOR_H
 #define JSONPROCESSOR_H
-
+#include "swdata.h"
 #include <json-c/json.h>
 
 class SwJsonProcessor
 {
   public:
-  SwJsonProcessor(const char*, size_t);  
+  SwJsonProcessor();  
+
+  virtual ~SwJsonProcessor();
+  
+  void process(const char*, size_t);  
 
   private:
+  // TODO: get rid of all these JSON objects.  put them in the data
+  // and figure out how to pair them or easily translate them.
+  Data *weatherData;
+
   struct json_object *parsedJson;
   
   struct json_object *latitude;

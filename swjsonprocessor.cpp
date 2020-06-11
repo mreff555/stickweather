@@ -1,7 +1,15 @@
 #include "swjsonprocessor.h"
+#include "swdata.h"
 #include <cstdio>
 
-SwJsonProcessor::SwJsonProcessor(const char *buffer, size_t size)
+
+SwJsonProcessor::SwJsonProcessor() : weatherData(new Data)
+{
+}
+
+SwJsonProcessor::~SwJsonProcessor(){}
+
+void SwJsonProcessor::process(const char *buffer, size_t size)
 {
   if(!buffer)
   {

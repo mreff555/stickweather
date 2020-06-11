@@ -2,25 +2,35 @@
 #include "swreceiver.h"
 #include "swdefinitions.h"
 #include "swjsonprocessor.h"
+#include "swkeyfile.h"
 #include <iostream>
 
 int main()
 {
-  SwCoordinates coordinates(39.456, -79.234);
-  std::string a(TESTADDRESS);
-  std::string b(TESTKEY);
-  std::string c;
+  std::string webAddress(DEFAULT_ADDRESS);
+
+  Keyfile keyfile;
+  std::cout << "key: " << keyfile.getKey() << std::endl;
+  std::string key(keyfile.getKey());
+
+  SwCoordinates coordinates(36.456, -79.234);
+  std::string coords;
   if(coordinates.isValid())
   {
-    c = coordinates.getCoordinateString();
+    coords = coordinates.getCoordinateString();
   }
   else
   {
-    c = TESTOPTIONS;
+    coords = TESTOPTIONS;
   }
-  std::cout << c <<std::endl;
-  SwReceiver* rec = SwReceiver::getInstance(a,b,c);
+  SwReceiver* rec = SwReceiver::getInstance(
+    webAddress,
+    key,
+    coords);
+
+  rec->runQuery();
   struct MemoryStruct *mem = rec->getData();
-  SwJsonProcessor(mem->memory, mem->size);  
+  SwJsonProcessor jProc;
+  jProc.process(mem->memory, mem->size);  
 }
 
